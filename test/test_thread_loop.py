@@ -29,3 +29,4 @@ def test_thread_loop_runs_in_background():
         os.write(write_fd, "Message 2\n")
         os.close(write_fd)
     assert ''.join(strings) == "Message 1\nMessage 2\n"
+    os.close(read_fd)
