@@ -20,11 +20,7 @@ class CachedProperty(object):
             return val.value
         val = self.cache[obj]
         if val.is_present:
-            if val.is_computed:
-                return val.value
-            val.value = result = self.func(obj)
-            val.is_computed = True
-            return result
+            return val.value
         raise AttributeError('%r has no attribute %r' %
                              (obj, self.func.__name__))
 
