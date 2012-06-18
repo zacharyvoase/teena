@@ -1,4 +1,5 @@
 import os
+import sys; reload(sys).setdefaultencoding('utf-8')
 
 from distribute_setup import use_setuptools
 use_setuptools()
@@ -6,7 +7,7 @@ use_setuptools()
 from setuptools import setup, find_packages
 
 
-long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read().decode('utf-8')
 
 
 setup(
