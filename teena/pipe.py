@@ -1,15 +1,11 @@
 import errno
 import os
 import sys
-import traceback
 
-from teena import cached_property
+from teena import DEFAULT_BUFSIZE, cached_property
 
 
 __all__ = ['Pipe']
-
-
-DEFAULT_BUFSIZE = 4096
 
 
 class Pipe(object):
