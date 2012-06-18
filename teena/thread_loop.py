@@ -24,12 +24,22 @@ class ThreadLoop(tornado.ioloop.IOLoop):
 
     @contextmanager
     def background(self):
+        # If the loop ever reaches a point where the only handler is the
+        # 'waker', terminate it (we're not a long-running web server, so we
+        # get to do this).
+        def callback():
+            if self.running():
+                if self._handlers.keys() == [self._waker.fileno()]:
+                    self.stop()
+                else:
+                    self.add_callback(callback)
+        self.add_callback(callback)
+
         thread = threading.Thread(target=self.start)
         thread.daemon = True
         thread.start()
         try:
             yield
         finally:
-            if self.running():
-                self.stop()
             thread.join()
+            self.close()
