@@ -1,4 +1,3 @@
-
 DEFAULT_BUFSIZE = 4096
 
 from error import Error
