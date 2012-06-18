@@ -115,14 +115,10 @@ def test_can_put_multiple_cached_properties_on_one_instance():
     assert counter.state == {'foo': 1, 'bar': 1}
 
 
-class ObjectWithIdentifier(object):
+class Object(object):
 
     def __init__(self):
-        self.ident = str(uuid.uuid4())
         self.deallocation_flag = [False]
-
-    def __eq__(self, other):
-        return (ObjectWithIdentifier, self.ident) == other
 
     def __del__(self):
         self.deallocation_flag[0] = True
@@ -134,25 +130,25 @@ class ObjectWithIdentifier(object):
 
 def test_objects_with_cached_properties_can_be_garbage_collected():
     import gc
-    obj = ObjectWithIdentifier()
-    ident = obj.ident
+    obj = Object()
+    ident = id(obj)
     dealloc_flag = obj.deallocation_flag
 
     # Invoke the cached_property.
     obj.some_property
 
     # The object is tracked by the garbage collector.
-    assert any(tracked_obj == (ObjectWithIdentifier, ident)
-               for tracked_obj in gc.get_objects()), \
+    assert any(id(tracked_obj) == ident for tracked_obj in gc.get_objects()), \
             "The object is not being tracked by the garbage collector"
+    # The object has been deallocated.
+    assert not dealloc_flag[0], "The object was already deallocated"
 
     # Delete the object and run a full garbage collection.
     del obj
     gc.collect()
 
     # The object is no longer tracked by the garbage collector.
-    assert not any(tracked_obj == (ObjectWithIdentifier, ident)
-                   for tracked_obj in gc.get_objects()), \
+    assert not any(id(tracked_obj) == ident for tracked_obj in gc.get_objects()), \
             "The object is still being tracked by the garbage collector"
     # The object has been deallocated.
     assert dealloc_flag[0], "The object was not deallocated"
