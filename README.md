@@ -15,7 +15,7 @@ can be used where a real file descriptor is needed.
 
 ## Example
 
-I'll demonstrate how to capture the result of an HTTP request, whilst
+I’ll demonstrate how to capture the result of an HTTP request, whilst
 efficiently streaming the response to `stderr`.
 
 Do the necessary imports:
