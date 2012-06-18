@@ -152,3 +152,37 @@ def test_objects_with_cached_properties_can_be_garbage_collected():
             "The object is still being tracked by the garbage collector"
     # The object has been deallocated.
     assert dealloc_flag[0], "The object was not deallocated"
+
+
+class X(object):
+
+    __slots__ = ('a', '__weakref__')
+
+    @cached_property
+    def incr_a(self):
+        self.a += 1
+        return self.a
+
+
+class Y(object):
+    __slots__ = ('b',)
+
+    @cached_property
+    def incr_b(self):
+        self.b += 1
+        return self.b
+
+
+def test_cached_property_supports_objects_without_dict_but_with_weakref():
+    x = X()
+    x.a = 123
+    assert x.incr_a == 124
+    assert x.a == 124
+    assert x.incr_a == 124
+    assert x.a == 124
+
+
+def test_cached_property_does_not_support_objects_without_weakref():
+    y = Y()
+    y.b = 456
+    assert_raises(TypeError, lambda: y.incr_b)
