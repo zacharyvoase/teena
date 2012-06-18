@@ -1,6 +1,6 @@
 import weakref
 
-__all__ = ['cachedproperty']
+__all__ = ['cached_property']
 
 
 class CachedProperty(object):
@@ -42,7 +42,7 @@ class CachedProperty(object):
 
 
 # An alias, for naming consistency with `property`.
-cachedproperty = CachedProperty
+cached_property = CachedProperty
 
 
 class CachedPropertyValue(object):

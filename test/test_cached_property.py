@@ -2,14 +2,14 @@ import uuid
 
 from nose.tools import assert_raises
 
-from teena.cachedproperty import cachedproperty
+from teena import cached_property
 
 
 class Counter(object):
     def __init__(self):
         self.state = {'value': 0}
 
-    @cachedproperty
+    @cached_property
     def attr(self):
         self.state['value'] += 1
         return self.state['value']
@@ -69,20 +69,20 @@ def test_deleting_a_cached_property_removes_it_from_the_instance():
     assert counter2.state['value'] == 0  # Never computed.
 
 
-def test_the_cachedproperty_descriptor_is_available_on_the_class():
-    assert isinstance(Counter.attr, cachedproperty)
+def test_the_cached_property_descriptor_is_available_on_the_class():
+    assert isinstance(Counter.attr, cached_property)
 
 
 class MultiCounter(object):
     def __init__(self):
         self.state = {'foo': 0, 'bar': 0}
 
-    @cachedproperty
+    @cached_property
     def foo(self):
         self.state['foo'] += 1
         return self.state['foo']
 
-    @cachedproperty
+    @cached_property
     def bar(self):
         self.state['bar'] += 1
         return self.state['bar']
@@ -127,7 +127,7 @@ class ObjectWithIdentifier(object):
     def __del__(self):
         self.deallocation_flag[0] = True
 
-    @cachedproperty
+    @cached_property
     def some_property(self):
         return 123
 
@@ -138,7 +138,7 @@ def test_objects_with_cached_properties_can_be_garbage_collected():
     ident = obj.ident
     dealloc_flag = obj.deallocation_flag
 
-    # Invoke the cachedproperty.
+    # Invoke the cached_property.
     obj.some_property
 
     # The object is tracked by the garbage collector.
