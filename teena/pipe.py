@@ -44,6 +44,9 @@ class Pipe(object):
             self._set_nonblocking(self.read_fd)
             self._set_nonblocking(self.write_fd)
 
+    def __repr__(self):
+        return '<Pipe r:%d w:%d>' % (self.read_fd, self.write_fd)
+
     def __enter__(self):
         return self
 
