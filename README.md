@@ -7,7 +7,7 @@ systems. The library uses [Tornado][] to do efficient asynchronous I/O.
 
   [tornado]: http://www.tornadoweb.org/
 
-The first version of this library contains implementations of `tee` and
+The first version of this library will contain implementations of `tee` and
 `splice` which operate on files, sockets, and file descriptors. There’s also a
 `Capture` class which behaves like `StringIO`, but it has a `fileno()` and so
 can be used where a real file descriptor is needed.
