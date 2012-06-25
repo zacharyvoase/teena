@@ -12,7 +12,7 @@ long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst')).r
 
 setup(
     name='teena',
-    version='0.0.1',
+    version='0.0.2',
     description="Python ports of useful syscalls, using asynchronous I/O.",
     long_description=long_description,
     author='Zachary Voase',
