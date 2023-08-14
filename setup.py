@@ -20,6 +20,6 @@ setup(
     url='http://github.com/zacharyvoase/teena',
     packages=find_packages(exclude=('test',)),
     install_requires=[
-        'tornado==2.3',
+        'tornado==6.3.3',
     ],
 )
